@@ -34,9 +34,12 @@ class SupabaseSetupTests(unittest.TestCase):
         )
 
     def test_frontend_secret_warning_is_present(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8").lower()
-        self.assertIn("service_role", html)
-        self.assertIn("publishable key", html)
+        frontend = "\n".join(
+            (ROOT / name).read_text(encoding="utf-8").lower()
+            for name in ("index.html", "app.js")
+        )
+        self.assertIn("service_role", frontend)
+        self.assertIn("publishable key", frontend)
 
 
 if __name__ == "__main__":
