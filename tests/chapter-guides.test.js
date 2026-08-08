@@ -40,3 +40,23 @@ test('recovered text cannot inject script elements', () => {
 
   assert.equal(/<script\b/i.test(combined), false);
 });
+
+test('chapter 2 contains the complete Your First Machines walkthrough', () => {
+  const guides = loadGuides();
+  const draft = guides.drafts[2];
+
+  assert.equal(guides.map['2'][0], 2);
+  assert.match(draft.title, /Chapter 2: Your First Machines/);
+  for (const section of [
+    'Your First Power',
+    'First Mekanism Machine',
+    'Make Steel',
+    'Ore Doubling',
+    'Build Your Machine Room',
+    'Common Mistakes',
+    'Pro Tip',
+  ]) {
+    assert.match(draft.body, new RegExp(section));
+  }
+  assert.ok((draft.body.match(/☐|☑|⬜/g) || []).length >= 50);
+});

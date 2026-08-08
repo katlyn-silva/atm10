@@ -7,7 +7,7 @@ window.ATM10_CHAPTER_GUIDES={
       "pt": "Configuração do mundo, primeiro dia, primeira noite, comida, vila e base temporária."
     },
     "2": {
-      "pt": "Itens que vale guardar, mochila, primeiras armas, armaduras e encantamentos."
+      "pt": "Primeiras máquinas, energia inicial, produção de aço, duplicação de minérios, mochila e sala de máquinas."
     },
     "3": {
       "pt": "Rotas para os minérios essenciais e preparação para automação."
@@ -189,6 +189,7 @@ window.ATM10_CHAPTER_GUIDES={
       1
     ],
     "2": [
+      2,
       37
     ],
     "3": [
@@ -396,6 +397,240 @@ window.ATM10_CHAPTER_GUIDES={
     "1": {
       "title": "The First Hour",
       "body": "Goal: Build a strong foundation so you never have to restart. Everything in this chapter is about speed and efficiency.\n\nEstimated Time: 45–60 minutes\n\n✅ Objectives\n🌍 1. Create Your World\n\n☐ Create your world\n\n☐ Enable Bonus Chest (optional)\n\n☐ Enable Cheats (optional if you like commands for testing)\n\n☐ Keep Inventory OFF (recommended for the intended experience)\n\n⛏️ 2. First 5 Minutes\nCollect\n\n☐ 64 Logs\n\n☐ 32 Stone\n\n☐ 16 Coal (or Charcoal if you can't find coal)\n\n☐ 3 Wool\n\n☐ 20+ Food\n\nCraft\n\n☐ Crafting Table\n\n☐ Stone Pickaxe\n\n☐ Stone Axe\n\n☐ Stone Shovel\n\n☐ Furnace\n\n☐ Bed\n\n☐ Shield\n\n⭐ Pro Tip: Don't craft a stone sword. An axe deals more damage early game and saves resources.\n\n🌲 3. Use Ultimine Immediately\n\nUltimine is one of the strongest early-game tools.\n\n☐ Open Controls\n\n☐ Learn the Ultimine key\n\n☐ Mine an entire tree in one click\n\n☐ Mine a full vein of coal\n\n☐ Mine a full vein of iron\n\n⭐ Pro Tip: Turn on \"Shapeless\" mode for mining awkward ore veins.\n\n🏘️ 4. Find One of These\n\nPriority:\n\n🥇 Village\n\n🥈 Waystone\n\n🥉 Dungeon Crawl Entrance\n\n4️⃣ When Dungeons Arise Structure\n\n5️⃣ Ruined House\n\nIf you find a Village\n\n☐ Claim the Waystone\n\n☐ Loot every chest\n\n☐ Take every bookshelf\n\n☐ Take every hay bale\n\n☐ Take every furnace\n\n☐ Take every blast furnace\n\n☐ Take every smoker\n\n☐ Take every barrel\n\n☐ Steal every crafting table\n\n☐ Mark the village on your map\n\n⭐ Don't feel bad—it's single-player. Villages are free loot.\n\n🎒 5. First Backpack\n\nGoal:\n\nSophisticated Backpack\n\nDo NOT stay with a vanilla inventory.\n\nOnce crafted:\n\n☐ Place it\n\n☐ Learn Backpack Keybind\n\n☐ Enable Auto Pickup\n\nLater upgrades:\n\n⬜ Iron\n\n⬜ Gold\n\n⬜ Diamond\n\n⬜ Netherite\n\n⛏️ 6. Early Mining\n\nCollect at least:\n\n☐ 5 Stacks Iron\n\n☐ 5 Stacks Osmium\n\n☐ 2 Stacks Redstone\n\n☐ 3 Stacks Coal\n\n☐ 1 Stack Gold\n\n☐ 1 Stack Copper\n\n☐ Tin\n\n☐ Zinc\n\n☐ Uranium\n\n☐ Fluorite\n\nDon't throw away any modded ores—you'll need almost all of them later.\n\n⚔️ 7. First Armor\n\nPriority:\n\n🥇 Iron Armor\n\n🥈 Diamond Armor\n\nDon't waste time enchanting leather or chainmail.\n\nGoal:\n\n☐ Iron Helmet\n\n☐ Iron Chestplate\n\n☐ Iron Leggings\n\n☐ Iron Boots\n\n☐ Shield\n\n🏠 8. Build a Temporary Base\n\nDon't build your permanent base yet.\n\nRequirements:\n\n☐ Near a Waystone\n\n☐ Flat area\n\n☐ Plenty of room\n\n☐ Water nearby\n\n☐ Easy cave access\n\n☐ Space for future machines\n\n⭐ Leave room for Mekanism. It grows much larger than most new players expect.\n\n🍖 9. Food\n\nGood:\n\n✅ Steak\n\n✅ Bread\n\n✅ Cooked Chicken\n\nExcellent:\n\n⭐ Farmer's Delight meals\n\nAvoid relying on berries or rotten flesh for long.\n\n📦 10. Keep Everything\n\nNever throw away:\n\n☐ String\n\n☐ Leather\n\n☐ Feathers\n\n☐ Bones\n\n☐ Slime\n\n☐ Honey\n\n☐ Blaze Rods\n\n☐ Ender Pearls\n\n☐ Quartz\n\n☐ Glowstone\n\n☐ Gunpowder\n\n☐ Paper\n\n☐ Books\n\n☐ Emeralds\n\n☐ All Modded Ores\n\n☐ Allthemodium (when you find it)\n\n❌ Common Mistakes\n\n❌ Building a huge permanent base immediately.\n\n❌ Smelting all your ores before setting up ore doubling.\n\n❌ Ignoring Osmium—it becomes one of the most important resources in ATM10.\n\n❌ Throwing away \"useless\" modded items. Many become essential later.\n\n🎯 End of Chapter Checklist\n\nBefore moving to Chapter 2, you should have:\n\n☑ Iron Armor\n\n☑ Backpack\n\n☑ Waystone Activated\n\n☑ Temporary Base\n\n☑ Plenty of Food\n\n☑ Iron Stored\n\n☑ Osmium Stored\n\n☑ Coal Stored\n\n☑ Redstone Stored\n\n☑ Diamonds (optional but recommended)\n\n⭐ Speedrun Tip\n\nIf your goal is simply to beat your friend, don't spend hours decorating your base in the beginning. Invest that time in Mekanism, ore doubling, and reaching the Mining Dimension as quickly as possible. That snowballs your progression far more than early building."
+    },
+    "2": {
+      "title": "ATM10 Ultimate Guide v7.2 — Chapter 2: Your First Machines",
+      "body": `Goal: Build your first proper tech setup and double your ores before wasting resources. In ATM10, Mekanism is one of the strongest technology paths to start with because it gives you early ore processing, power generation, and eventually leads into the Digital Miner.
+
+Estimated time: 45–90 minutes
+
+✅ Before You Start
+
+Don't begin Mekanism until you have roughly:
+
+☐ 5 stacks of Iron
+
+☐ 5 stacks of Osmium
+
+☐ 2 stacks of Redstone
+
+☐ 1 stack of Gold
+
+☐ Plenty of Coal
+
+☐ Backpack
+
+☐ Iron Armor
+
+⚡ Step 1 — Your First Power
+
+❌ Don't build
+
+Solar Panels (too weak early)
+
+Large Reactors
+
+Powah (later)
+
+✅ Build instead
+
+Heat Generator
+
+It's cheap and gets you started immediately. It can run on fuel and also gains passive power from nearby lava, making it an excellent first generator.
+
+Checklist:
+
+☐ Craft Heat Generator
+
+☐ Place it
+
+☐ Put lava beside or underneath it
+
+☐ Add Coal if extra power is needed
+
+⭐ Upgrade ASAP
+
+As soon as you can:
+
+☐ Craft 4–8 Wind Generators
+
+Build them as high as possible. Wind Generators produce more power the higher they are placed and are one of the best early-game passive power sources in ATM10.
+
+⚙️ Step 2 — First Mekanism Machine
+
+Craft in this order:
+
+☑ Metallurgic Infuser
+
+↓
+
+☑ Enrichment Chamber
+
+↓
+
+☑ Crusher
+
+↓
+
+☑ Basic Energy Cube
+
+↓
+
+☑ Basic Universal Cable
+
+Do not craft random Mekanism machines.
+
+🔥 Step 3 — Make Steel
+
+Steel is one of the most important materials in Mekanism.
+
+Checklist:
+
+☐ Put Coal into the Metallurgic Infuser
+
+☐ Fill Carbon bar
+
+☐ Insert Iron
+
+☐ Produce Steel
+
+☐ Store at least 64 Steel
+
+You'll use it constantly later.
+
+💎 Step 4 — Ore Doubling
+
+Never smelt ores directly anymore.
+
+Instead:
+
+Ore
+
+↓
+
+Enrichment Chamber
+
+↓
+
+2 Dust
+
+↓
+
+Furnace
+
+↓
+
+2 Ingots
+
+Goal:
+
+☐ Process Iron
+
+☐ Process Gold
+
+☐ Process Copper
+
+☐ Process Osmium
+
+☐ Process Tin
+
+☐ Process Uranium
+
+Once this is running, your mining becomes twice as efficient.
+
+📦 Step 5 — Storage
+
+Craft:
+
+☑ Iron Backpack
+
+Install:
+
+☐ Magnet Upgrade
+
+☐ Feeding Upgrade
+
+☐ Stack Upgrade
+
+☐ Deposit Upgrade
+
+These upgrades save huge amounts of time while mining and exploring. A Sophisticated Backpack is considered one of the highest-impact quality-of-life items early in ATM10.
+
+⛏️ Step 6 — Keep Mining
+
+Target amounts:
+
+☐ 10 stacks Iron
+
+☐ 10 stacks Osmium
+
+☐ 5 stacks Redstone
+
+☐ 5 stacks Gold
+
+☐ 3 stacks Uranium
+
+☐ 2 stacks Fluorite
+
+☐ Diamonds
+
+Don't stop mining just because you can craft machines.
+
+🏗️ Step 7 — Build Your Machine Room
+
+Recommended starter size:
+
+⬜ 9×9
+
+Then expand later.
+
+Leave empty space for:
+
+☐ More Mekanism Machines
+
+☐ Storage
+
+☐ AE2
+
+☐ Power Room
+
+☐ Processing Room
+
+A simple, expandable layout early is much easier than rebuilding later.
+
+⭐ Step 8 — Your Next Goal
+
+After this chapter:
+
+☑ Stable Power
+
+☑ Ore Doubling
+
+☑ Steel Production
+
+☑ Better Backpack
+
+☑ Organized Storage
+
+Then your next milestone is:
+
+Find your first Allthemodium ore and unlock the Mining Dimension.
+
+That changes the pace of the entire playthrough.
+
+❌ Common Mistakes
+
+❌ Smelting ores directly.
+
+❌ Building lots of different generators instead of committing to one good setup.
+
+❌ Ignoring Osmium—it's one of the core resources for Mekanism.
+
+❌ Building a cramped machine room with no space to expand.
+
+⭐ Pro Tip
+
+One of the biggest differences between average and experienced ATM10 players is automation timing. As soon as you have stable power and ore doubling, stop thinking about individual resources and start thinking about systems: automatic storage, automatic ore processing, and automatic resource generation. That's what makes progression snowball.`
     },
     "4": {
       "title": "The Digital Miner (The Game Changer)",
