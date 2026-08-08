@@ -24,6 +24,7 @@ main{padding:24px;max-width:1200px;width:100%;margin:auto}
 .nav button{width:100%;text-align:left;padding:9px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer}
 .nav button:hover,.nav button.active{background:var(--panel2);color:var(--text);border-color:var(--border)}
 .nav button.done{color:var(--accent)}.nav-empty{padding:10px;color:var(--muted);line-height:1.45}
+.global-results{display:grid;gap:6px;margin:-7px 0 12px}.global-results[hidden]{display:none}.search-result{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px;border:1px solid var(--border);border-radius:9px;background:var(--panel2)}.search-result button{grid-column:1/-1;text-align:left;border:0;background:transparent;color:var(--text);cursor:pointer;padding:0}.search-result small{color:var(--muted)}.search-kind{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent2)}.search-result.focused,.tool-card.search-focused{outline:2px solid var(--accent);outline-offset:2px}
 .hero,.card{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:20px;margin-bottom:18px}
 h1{margin:0 0 8px;color:var(--accent)}h2,h3{color:var(--accent2)}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
@@ -212,7 +213,7 @@ h1{margin:0 0 8px;color:var(--accent)}h2,h3{color:var(--accent2)}
 .encyclopedia-card,.encyclopedia-section{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px}
 .encyclopedia-card h3,.encyclopedia-section h3{margin:0 0 8px;color:var(--accent2)}
 @media(max-width:800px){.encyclopedia-toolbar{grid-template-columns:1fr}}
-.completion-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}.completion-card{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:13px}.completion-card strong{display:block;font-size:26px;color:var(--accent)}.completion-toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:14px}.completion-group{background:var(--panel2);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.completion-group summary{cursor:pointer;padding:13px;font-weight:700;color:var(--accent2)}.completion-items{padding:0 13px 13px;display:grid;gap:7px}.completion-row{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:9px}.completion-progress{height:10px;background:#081018;border-radius:999px;overflow:hidden;margin-top:7px}.completion-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent))}@media(max-width:800px){.completion-toolbar{grid-template-columns:1fr}}
+.completion-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}.completion-card{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:13px}.completion-card strong{display:block;font-size:26px;color:var(--accent)}.completion-toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:14px}.completion-group{background:var(--panel2);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.completion-group summary{cursor:pointer;padding:13px;font-weight:700;color:var(--accent2)}.completion-items{padding:0 13px 13px;display:grid;gap:7px}.completion-row{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:9px}.completion-note{font-size:12px;padding:5px 8px}.completion-note.has-note{color:var(--accent);border-color:var(--accent)}.completion-progress{height:10px;background:#081018;border-radius:999px;overflow:hidden;margin-top:7px}.completion-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent))}@media(max-width:800px){.completion-toolbar{grid-template-columns:1fr}}
 .account-bar{display:flex;justify-content:flex-end;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:12px}
 .account-button{display:flex;align-items:center;gap:8px;background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer}
 .account-avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#081018;font-weight:800}
@@ -239,6 +240,7 @@ h1{margin:0 0 8px;color:var(--accent)}h2,h3{color:var(--accent2)}
 <div class="muted" id="stats">0%</div>
 <div class="sidebar-heading"><span>📚 Capítulos</span><span class="sidebar-count" id="sidebarCount">60/60</span></div>
 <input class="search" id="search" name="atm10-guide-search" type="search" autocomplete="off" autocapitalize="none" spellcheck="false" data-lpignore="true" placeholder="Pesquisar item, máquina, mod ou capítulo..." aria-label="Pesquisar no guia">
+<div id="globalSearchResults" class="global-results" hidden aria-live="polite"></div>
 <div class="nav" id="nav" aria-label="60 capítulos do guia"></div>
 <div class="customizer">
 <h3>🎨 Aparência</h3>
@@ -480,7 +482,7 @@ function renderDimensionOverview(showTracker=false,chapterId=null){
   <td>${escapeHtml(dimensionText(d,'why'))}</td>
   <td class="${d.difficulty>=7?'danger':''}">${d.difficulty}/10${d.difficulty>=7?' ⚠️':''}</td>
  </tr>`).join('');
- const details=showTracker?`<div class="dimension-detail-list">${DIMENSION_DATA.map(d=>`<article class="dimension-detail"><h4>${d.icon} ${escapeHtml(L(d))}</h4><b>${tr('Objetivos','Objectives')}</b><ul>${(currentLang==='en'?d.objectivesEn:d.objectivesPt||[]).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul><b>Bosses</b><p>${(d.bosses||[]).length?d.bosses.map(escapeHtml).join(' • '):tr('Nenhum boss obrigatório','No required boss')}</p><button class="action" onclick="openChapter(${d.chapter})">${tr('Abrir capítulo','Open chapter')} ${d.chapter}</button></article>`).join('')}</div>`:'';
+ const details=showTracker?`<div class="dimension-detail-list">${DIMENSION_DATA.map(d=>`<article class="dimension-detail" data-search-id="${d.id}"><h4>${d.icon} ${escapeHtml(L(d))}</h4><b>${tr('Objetivos','Objectives')}</b><ul>${(currentLang==='en'?d.objectivesEn:d.objectivesPt||[]).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul><b>Bosses</b><p>${(d.bosses||[]).length?d.bosses.map(escapeHtml).join(' • '):tr('Nenhum boss obrigatório','No required boss')}</p><button class="action" onclick="openChapter(${d.chapter})">${tr('Abrir capítulo','Open chapter')} ${d.chapter}</button></article>`).join('')}</div>`:'';
  return `<section class="dimension-guide${showTracker?' card':''}">
   <h3>${tr('Guia de dimensões','Dimension guide')}</h3>
   <p class="muted">${tr('Rotas de acesso, motivos para visitar e dificuldade relativa. Confirme o formato exato dos portais no livro de quests e no JEI da sua versão.','Access routes, reasons to visit, and relative difficulty. Confirm exact portal construction in your version\'s quest book and JEI.')}</p>
@@ -617,7 +619,8 @@ function render3DViewer(){
  const host=document.getElementById('multiblockViewer');if(!host)return;const m=MULTIBLOCKS.find(x=>x.id===activeMultiblockId);const model=generateModel(m.id);const cell=32,counts={};let cubes='';
  model.layers.forEach((layer,y)=>layer.forEach((row,z)=>row.forEach((type,x)=>{if(type==='air')return;counts[type]=(counts[type]||0)+1;const visible=viewerLayer<0||viewerLayer===y;const opacity=viewerMode==='transparent'?.35:1;const extraY=(viewerMode==='exploded'?y*viewerExplode:0);cubes+=`<div class="voxel ${type}" title="${blockName(type)} — x${x+1}, y${y+1}, z${z+1}" style="opacity:${visible?opacity:0.06};pointer-events:${visible?'auto':'none'};transform:translate3d(${(x-(model.x-1)/2)*cell}px,${(-(y-(model.y-1)/2)*cell)-extraY}px,${(z-(model.z-1)/2)*cell}px)">${cubeFaces()}</div>`}))); 
  const worldTransform=`translate(-50%,-50%) rotateX(-24deg) rotateY(${viewerRotation}deg) scale(${viewerZoom})`;
- host.innerHTML=`<div class="viewer-shell"><div class="viewer-stage"><div class="layer-badge">${L(m)} • ${viewerLayer<0?tr('Todas as camadas','All layers'):`${tr('Camada','Layer')} ${viewerLayer+1}/${model.y}`}</div><div class="voxel-world" style="transform:${worldTransform}">${cubes}</div><div class="viewer-help">${tr('Use rotação, zoom e camada para inspecionar cada bloco.','Use rotation, zoom, and layer controls to inspect every block.')}</div></div><aside class="viewer-controls"><div class="control-group"><label>${tr('Multibloco','Multiblock')}</label><select id="viewerSelect">${MULTIBLOCKS.map(x=>`<option value="${x.id}" ${x.id===m.id?'selected':''}>${L(x)}</option>`).join('')}</select></div><div class="control-group"><label>${tr('Camada','Layer')}: <span id="layerLabel">${viewerLayer<0?tr('Todas','All'):viewerLayer+1}</span></label><input id="layerRange" type="range" min="-1" max="${model.y-1}" value="${viewerLayer}"><div class="viewer-buttons"><button id="prevLayer">−</button><button id="playLayers">▶</button><button id="nextLayer">+</button></div></div><div class="control-group"><label>${tr('Visualização','View')}</label><select id="viewerMode"><option value="solid" ${viewerMode==='solid'?'selected':''}>${tr('Sólida','Solid')}</option><option value="transparent" ${viewerMode==='transparent'?'selected':''}>${tr('Transparente','Transparent')}</option><option value="exploded" ${viewerMode==='exploded'?'selected':''}>${tr('Explodida','Exploded')}</option></select>${viewerMode==='exploded'?`<label>${tr('Separação','Separation')}</label><input id="explodeRange" type="range" min="0" max="24" value="${viewerExplode}">`:''}</div><div class="control-group"><label>${tr('Rotação e zoom','Rotation and zoom')}</label><div class="viewer-buttons"><button id="rotLeft">↺</button><button id="rotRight">↻</button><button id="zoomOut">−</button><button id="zoomIn">+</button><button id="resetView">Reset</button></div></div><div class="control-group"><label>${tr('Legenda e contagem','Legend and count')}</label><div class="legend-grid">${Object.entries(counts).map(([t,n])=>`<div class="legend-item"><span class="legend-swatch" style="background:${blockColor(t)}"></span><span>${blockName(t)}: ${n}</span></div>`).join('')}</div></div><div class="control-group"><p><b>${L(m.size)}</b></p><button class="action" id="openMbChapter">${tr('Abrir capítulo','Open chapter')} ${m.chapter}</button><div class="source-note">${m.source}</div></div></aside></div>`;
+ const statusText=m.status==='exact'?tr('Layout de referência confirmado; valide portas e receita na versão instalada.','Confirmed reference layout; validate ports and recipe in the installed version.'):m.status==='recommended'?tr('Layout recomendado e escalável, não uma única estrutura obrigatória.','Recommended scalable layout, not a single mandatory structure.'):tr('Estrutura dependente da versão: o preview do JEI é a fonte final.','Version-dependent structure: the JEI preview is authoritative.');
+ host.innerHTML=`<div class="viewer-shell"><div class="viewer-stage"><div class="layer-badge">${L(m)} • ${viewerLayer<0?tr('Todas as camadas','All layers'):`${tr('Camada','Layer')} ${viewerLayer+1}/${model.y}`}</div><div class="voxel-world" style="transform:${worldTransform}">${cubes}</div><div class="viewer-help">${tr('Use rotação, zoom e camada para inspecionar cada bloco.','Use rotation, zoom, and layer controls to inspect every block.')}</div></div><aside class="viewer-controls"><div class="control-group"><label>${tr('Multibloco','Multiblock')}</label><select id="viewerSelect">${MULTIBLOCKS.map(x=>`<option value="${x.id}" ${x.id===m.id?'selected':''}>${L(x)}</option>`).join('')}</select></div><div class="control-group"><label>${tr('Camada','Layer')}: <span id="layerLabel">${viewerLayer<0?tr('Todas','All'):viewerLayer+1}</span></label><input id="layerRange" type="range" min="-1" max="${model.y-1}" value="${viewerLayer}"><div class="viewer-buttons"><button id="prevLayer">−</button><button id="playLayers">▶</button><button id="nextLayer">+</button></div></div><div class="control-group"><label>${tr('Visualização','View')}</label><select id="viewerMode"><option value="solid" ${viewerMode==='solid'?'selected':''}>${tr('Sólida','Solid')}</option><option value="transparent" ${viewerMode==='transparent'?'selected':''}>${tr('Transparente','Transparent')}</option><option value="exploded" ${viewerMode==='exploded'?'selected':''}>${tr('Explodida','Exploded')}</option></select>${viewerMode==='exploded'?`<label>${tr('Separação','Separation')}</label><input id="explodeRange" type="range" min="0" max="24" value="${viewerExplode}">`:''}</div><div class="control-group"><label>${tr('Rotação e zoom','Rotation and zoom')}</label><div class="viewer-buttons"><button id="rotLeft">↺</button><button id="rotRight">↻</button><button id="zoomOut">−</button><button id="zoomIn">+</button><button id="resetView">Reset</button></div></div><div class="control-group"><label>${tr('Legenda e contagem','Legend and count')}</label><div class="legend-grid">${Object.entries(counts).map(([t,n])=>`<div class="legend-item"><span class="legend-swatch" style="background:${blockColor(t)}"></span><span>${blockName(t)}: ${n}</span></div>`).join('')}</div><button class="action" id="exportMbMaterials">${tr('Exportar materiais','Export materials')}</button></div><div class="control-group"><span class="pill">${m.status}</span><p>${statusText}</p><p><b>${L(m.size)}</b></p><button class="action" id="openMbChapter">${tr('Abrir capítulo','Open chapter')} ${m.chapter}</button><div class="source-note">${m.source}</div></div></aside></div>`;
  document.getElementById('viewerSelect').addEventListener('change',e=>{activeMultiblockId=e.target.value;viewerLayer=-1;viewerRotation=0;viewerZoom=1;viewerMode='solid';render3DViewer()});
  document.getElementById('layerRange').addEventListener('input',e=>{viewerLayer=+e.target.value;render3DViewer()});
  document.getElementById('prevLayer').addEventListener('click',()=>{viewerLayer=Math.max(-1,viewerLayer-1);render3DViewer()});
@@ -629,6 +632,7 @@ function render3DViewer(){
  document.getElementById('zoomOut').addEventListener('click',()=>{viewerZoom=Math.max(.45,viewerZoom-.1);render3DViewer()});document.getElementById('zoomIn').addEventListener('click',()=>{viewerZoom=Math.min(1.8,viewerZoom+.1);render3DViewer()});
  document.getElementById('resetView').addEventListener('click',()=>{viewerRotation=0;viewerZoom=1;viewerLayer=-1;viewerMode='solid';viewerExplode=0;render3DViewer()});
  document.getElementById('openMbChapter').addEventListener('click',()=>openChapter(m.chapter));
+ document.getElementById('exportMbMaterials').addEventListener('click',()=>downloadJSON(`atm10-${m.id}-materials.json`,{multiblock:L(m),status:m.status,size:L(m.size),model:{x:model.x,y:model.y,z:model.z},materials:Object.fromEntries(Object.entries(counts).map(([type,count])=>[blockName(type),count])),source:m.source}));
 }
 
 
@@ -691,7 +695,9 @@ function setupWorld3D(){
 }
 
 
-let importedWorld=null;
+const REAL_WORLD_KEY='atm10-v27-real-world';
+function readStoredWorld(){try{return JSON.parse(localStorage.getItem(REAL_WORLD_KEY)||'null')}catch{return null}}
+let importedWorld=readStoredWorld();
 let realMapState={dimension:null,mode:'biome',rotation:0,zoom:1};
 const BIOME_COLORS={
  'minecraft:plains':'#6f9b50','minecraft:forest':'#2f6b42','minecraft:dark_forest':'#244633','minecraft:desert':'#c7a65e',
@@ -743,17 +749,39 @@ function renderImportedWorld(){
  document.getElementById('realOreCount').textContent=chunks.reduce((a,c)=>a+oreTotal(c),0).toLocaleString();
  document.getElementById('realStructureCount').textContent=chunks.reduce((a,c)=>a+structureTotal(c),0).toLocaleString();
 }
+function validateWorldMap(data){
+ if(!data||data.format!=='atm10-world-map-v1')throw new Error('Unsupported map format');
+ if(!data.dimensions||typeof data.dimensions!=='object'||!Object.keys(data.dimensions).length)throw new Error('Map has no dimensions');
+ for(const [name,dimension] of Object.entries(data.dimensions))if(!dimension||!Array.isArray(dimension.chunks))throw new Error(`Invalid chunk list for ${name}`);
+ return data;
+}
+function persistImportedWorld(){
+ if(!importedWorld){localStorage.removeItem(REAL_WORLD_KEY);return true;}
+ try{
+  const raw=JSON.stringify(importedWorld);
+  if(raw.length>4200000){localStorage.removeItem(REAL_WORLD_KEY);return false;}
+  localStorage.setItem(REAL_WORLD_KEY,raw);return true;
+ }catch{return false;}
+}
+function applyImportedWorld(data,persist=true){
+ importedWorld=validateWorldMap(data);
+ const sel=document.getElementById('realDimension');if(!sel)return;
+ sel.innerHTML=Object.keys(data.dimensions).map(k=>`<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join('');
+ realMapState.dimension=sel.value;
+ document.getElementById('realWorldName').textContent=data.world?.name||'Imported world';
+ document.getElementById('realSeed').textContent=data.world?.seed??'unknown';
+ const saved=persist?persistImportedWorld():true,status=document.getElementById('realWorldStatus');
+ if(status)status.textContent=saved?tr('Mapa salvo neste dispositivo.','Map saved on this device.'):tr('Mapa carregado, mas é grande demais para o armazenamento do navegador. Exporte o JSON para mantê-lo.','Map loaded, but it is too large for browser storage. Keep the JSON file as a backup.');
+ renderImportedWorld();
+ if(typeof queueAutoCloudSync==='function')queueAutoCloudSync();
+}
+function clearImportedWorld(){importedWorld=null;realMapState.dimension=null;localStorage.removeItem(REAL_WORLD_KEY);render();}
+function exportImportedWorld(){if(importedWorld)downloadJSON('atm10-world-map-backup.json',importedWorld)}
 function loadWorldMapFile(file){
  const reader=new FileReader();reader.onload=()=>{
    try{
      const data=JSON.parse(reader.result);
-     if(data.format!=='atm10-world-map-v1')throw new Error('Unsupported map format');
-     importedWorld=data;
-     const sel=document.getElementById('realDimension');sel.innerHTML=Object.keys(data.dimensions||{}).map(k=>`<option value="${k}">${k}</option>`).join('');
-     realMapState.dimension=sel.value;
-     document.getElementById('realWorldName').textContent=data.world?.name||'Imported world';
-     document.getElementById('realSeed').textContent=data.world?.seed??'unknown';
-     renderImportedWorld();
+     applyImportedWorld(data,true);
    }catch(e){alert('Could not import map: '+e.message)}
  };reader.readAsText(file);
 }
@@ -768,12 +796,16 @@ function setupRealWorldImport(){
  document.getElementById('realMode').addEventListener('change',e=>{realMapState.mode=e.target.value;renderImportedWorld()});
  document.getElementById('realRotation').addEventListener('input',e=>{realMapState.rotation=Number(e.target.value);renderImportedWorld()});
  document.getElementById('realZoom').addEventListener('input',e=>{realMapState.zoom=Number(e.target.value);renderImportedWorld()});
+ document.getElementById('realWorldExport').addEventListener('click',exportImportedWorld);
+ document.getElementById('realWorldClear').addEventListener('click',clearImportedWorld);
+ if(importedWorld){try{applyImportedWorld(importedWorld,false)}catch{importedWorld=null;localStorage.removeItem(REAL_WORLD_KEY)}}
 }
 
 
-const APP_VERSION='26.0';
+const APP_VERSION='27.0';
 const CLOUD_CONFIG_KEY='atm10-v18-cloud-config';
 const CLOUD_SESSION_KEY='atm10-v18-cloud-session';
+const CLOUD_PENDING_KEY='atm10-v27-cloud-pending';
 const UPDATE_CONFIG_KEY='atm10-v18-update-config';
 const UPDATE_STATE_KEY='atm10-v18-update-state';
 
@@ -819,14 +851,17 @@ async function cloudAuth(action){
   renderCloudStatus();
  }catch(e){cloudLog('Auth error: '+e.message,'error');}
 }
+let cloudRefreshPromise=null;
 async function refreshCloudSession(){
  if(!cloudSession?.refresh_token)return false;
- try{
+ if(cloudRefreshPromise)return cloudRefreshPromise;
+ cloudRefreshPromise=(async()=>{try{
   const res=await fetch(normalizeSupabaseUrl(cloudConfig.url)+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{'apikey':cloudConfig.key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:cloudSession.refresh_token})});
   const data=await res.json(); if(!res.ok)throw new Error(data.message||res.statusText);
   cloudSession={access_token:data.access_token,refresh_token:data.refresh_token||cloudSession.refresh_token,user:data.user||cloudSession.user,expires_at:Date.now()+(data.expires_in||3600)*1000};
   localStorage.setItem(CLOUD_SESSION_KEY,JSON.stringify(cloudSession)); return true;
- }catch(e){cloudLog('Session refresh failed: '+e.message,'error');return false;}
+ }catch(e){cloudLog('Session refresh failed: '+e.message,'error');return false;}finally{cloudRefreshPromise=null}})();
+ return cloudRefreshPromise;
 }
 async function ensureCloudSession(){
  if(!cloudSession?.access_token)return false;
@@ -834,7 +869,16 @@ async function ensureCloudSession(){
  return true;
 }
 function cloudLogout(){
- cloudSession=null;localStorage.removeItem(CLOUD_SESSION_KEY);renderCloudStatus();cloudLog('Signed out.');
+ cloudSession=null;localStorage.removeItem(CLOUD_SESSION_KEY);localStorage.removeItem(CLOUD_PENDING_KEY);cloudDirty=false;renderCloudStatus();cloudLog('Signed out.');
+}
+function setCloudPending(pending=true){cloudDirty=pending;if(pending)localStorage.setItem(CLOUD_PENDING_KEY,'1');else localStorage.removeItem(CLOUD_PENDING_KEY);}
+async function cloudSessionFetch(url,options={},retry=true){
+ const res=await fetch(url,options);
+ if(res.status===401&&retry&&await refreshCloudSession()){
+  const headers={...(options.headers||{}),...authHeaders(cloudSession.access_token)};
+  return fetch(url,{...options,headers});
+ }
+ return res;
 }
 function collectAllAppData(){
  return {
@@ -873,6 +917,7 @@ function applyCloudPayload(payload,merge=true){
  if(typeof encyclopediaExtra!=='undefined'&&Array.isArray(payload.encyclopedia)){encyclopediaExtra=payload.encyclopedia;localStorage.setItem(ENCYCLOPEDIA_KEY,JSON.stringify(encyclopediaExtra));}
  if(payload.language){currentLang=payload.language;localStorage.setItem(LANGUAGE_KEY,currentLang);}
  if(typeof worldCustomMarkers!=='undefined'&&payload.world_markers)worldCustomMarkers=merge?mergeObjects(worldCustomMarkers,payload.world_markers):payload.world_markers;
+ if(payload.real_world){try{importedWorld=validateWorldMap(payload.real_world);persistImportedWorld()}catch(e){console.warn('Ignored invalid cloud world map',e)}}
  localStorage.setItem(KEY,JSON.stringify(state));
  savePersonal();saveAppearance();saveTrackers();
  if(typeof saveWorldMarkers==='function')saveWorldMarkers();
@@ -887,17 +932,17 @@ async function cloudUpload(){
  const userId=cloudSession.user?.id;if(!userId){cloudLog('No user ID in session.','error');return;}
  try{
   const body={user_id:userId,payload:collectAllAppData(),updated_at:new Date().toISOString()};
-  const res=await fetch(`${cloudConfig.url}/rest/v1/guide_sync?on_conflict=user_id`,{method:'POST',headers:{...authHeaders(cloudSession.access_token),'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(body)});
+  const res=await cloudSessionFetch(`${cloudConfig.url}/rest/v1/guide_sync?on_conflict=user_id`,{method:'POST',headers:{...authHeaders(cloudSession.access_token),'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(body)});
   const data=await res.json();if(!res.ok)throw new Error(data.message||data.hint||res.statusText);
   cloudConfig.lastSync=new Date().toISOString();localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));
-  cloudLog('Upload complete.');renderCloudStatus();
- }catch(e){cloudLog('Upload failed: '+e.message,'error');}
+  setCloudPending(false);cloudLog('Upload complete.');renderCloudStatus();
+ }catch(e){setCloudPending(true);cloudLog('Upload failed; changes remain queued: '+e.message,'error');}
 }
 async function cloudDownload(){
  if(!(await ensureCloudSession())){cloudLog('Sign in first.','error');return;}
  const userId=cloudSession.user?.id;
  try{
-  const res=await fetch(`${cloudConfig.url}/rest/v1/guide_sync?user_id=eq.${encodeURIComponent(userId)}&select=payload,updated_at&limit=1`,{headers:authHeaders(cloudSession.access_token)});
+  const res=await cloudSessionFetch(`${cloudConfig.url}/rest/v1/guide_sync?user_id=eq.${encodeURIComponent(userId)}&select=payload,updated_at&limit=1`,{headers:authHeaders(cloudSession.access_token)});
   const data=await res.json();if(!res.ok)throw new Error(data.message||res.statusText);
   if(!data.length){cloudLog('No cloud save found.');return;}
   const merge=document.getElementById('cloudMerge')?.checked!==false;
@@ -918,7 +963,7 @@ const ACCOUNT_PREF_KEY='atm10-Ultimate Edition v1.0-account-prefs';
 let accountPrefs=JSON.parse(localStorage.getItem(ACCOUNT_PREF_KEY)||'{"autoSync":true}');
 let accountMode='signin';
 let autoSyncTimer=null;
-let cloudDirty=false;
+let cloudDirty=localStorage.getItem(CLOUD_PENDING_KEY)==='1';
 function accountMessage(text,error=false){const el=document.getElementById('accountMessage');if(el){el.textContent=text;el.style.color=error?'#ff7b72':'var(--muted)';}}
 function accountProfileMessage(text,error=false){const el=document.getElementById('accountProfileMessage');if(el){el.textContent=text;el.style.color=error?'#ff7b72':'var(--muted)';}}
 function openAccountModal(){document.getElementById('accountModal').classList.add('show');document.getElementById('accountModal').setAttribute('aria-hidden','false');refreshAccountUI();}
@@ -1045,10 +1090,10 @@ async function testAccountSupabaseConnection(){
     set('Falha na conexão: '+(error.message||error),true);
   }
 }
-async function cloudDownloadSilent(){if(!(await ensureCloudSession()))return false;try{const userId=cloudSession.user?.id;const res=await fetch(`${cloudConfig.url}/rest/v1/guide_sync?user_id=eq.${encodeURIComponent(userId)}&select=payload,updated_at&limit=1`,{headers:authHeaders(cloudSession.access_token)});const data=await res.json();if(!res.ok)throw new Error(data.message||res.statusText);if(data.length){applyCloudPayload(data[0].payload,true);cloudConfig.lastSync=data[0].updated_at;localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));}return true;}catch(e){accountProfileMessage('Falha ao baixar: '+e.message,true);return false;}}
+async function cloudDownloadSilent(){if(!(await ensureCloudSession()))return false;try{const userId=cloudSession.user?.id;const res=await cloudSessionFetch(`${cloudConfig.url}/rest/v1/guide_sync?user_id=eq.${encodeURIComponent(userId)}&select=payload,updated_at&limit=1`,{headers:authHeaders(cloudSession.access_token)});const data=await res.json();if(!res.ok)throw new Error(data.message||res.statusText);if(data.length){applyCloudPayload(data[0].payload,true);cloudConfig.lastSync=data[0].updated_at;localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));}return true;}catch(e){accountProfileMessage('Falha ao baixar: '+e.message,true);return false;}}
 async function accountSyncNow(){accountProfileMessage('Sincronizando...');const ok=await cloudUploadSilent();accountProfileMessage(ok?'Sincronização concluída.':'Falha na sincronização.',!ok);refreshAccountUI();}
-async function cloudUploadSilent(){if(!(await ensureCloudSession()))return false;try{const userId=cloudSession.user?.id;const body={user_id:userId,payload:collectAllAppData(),updated_at:new Date().toISOString()};const res=await fetch(`${cloudConfig.url}/rest/v1/guide_sync?on_conflict=user_id`,{method:'POST',headers:{...authHeaders(cloudSession.access_token),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(body)});if(!res.ok){let d={};try{d=await res.json()}catch{}throw new Error(d.message||d.hint||res.statusText);}cloudConfig.lastSync=new Date().toISOString();localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));cloudDirty=false;return true;}catch(e){console.warn(e);return false;}}
-function queueAutoCloudSync(){cloudDirty=true;const ind=document.getElementById('accountSyncIndicator');if(ind)ind.textContent=cloudSession?.access_token?'Alterações aguardando sincronização':'Salvo neste dispositivo';if(!accountPrefs.autoSync||!cloudSession?.access_token||!navigator.onLine)return;clearTimeout(autoSyncTimer);autoSyncTimer=setTimeout(async()=>{const ok=await cloudUploadSilent();const i=document.getElementById('accountSyncIndicator');if(i)i.textContent=ok?'Sincronizado':'Falha ao sincronizar';refreshAccountUI();},1800);}
+async function cloudUploadSilent(){if(!(await ensureCloudSession()))return false;try{const userId=cloudSession.user?.id;const body={user_id:userId,payload:collectAllAppData(),updated_at:new Date().toISOString()};const res=await cloudSessionFetch(`${cloudConfig.url}/rest/v1/guide_sync?on_conflict=user_id`,{method:'POST',headers:{...authHeaders(cloudSession.access_token),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(body)});if(!res.ok){let d={};try{d=await res.json()}catch{}throw new Error(d.message||d.hint||res.statusText);}cloudConfig.lastSync=new Date().toISOString();localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));setCloudPending(false);return true;}catch(e){setCloudPending(true);console.warn(e);return false;}}
+function queueAutoCloudSync(){setCloudPending(true);const ind=document.getElementById('accountSyncIndicator');if(ind)ind.textContent=cloudSession?.access_token?'Alterações aguardando sincronização':'Salvo neste dispositivo';if(!accountPrefs.autoSync||!cloudSession?.access_token||!navigator.onLine)return;clearTimeout(autoSyncTimer);autoSyncTimer=setTimeout(async()=>{const ok=await cloudUploadSilent();const i=document.getElementById('accountSyncIndicator');if(i)i.textContent=ok?'Sincronizado':'Falha ao sincronizar';refreshAccountUI();},1800);}
 function refreshAccountUI(){const signed=!!cloudSession?.access_token;const out=document.getElementById('accountLoggedOut'),inside=document.getElementById('accountLoggedIn');if(out)out.hidden=signed;if(inside)inside.hidden=!signed;const email=cloudSession?.user?.email||cloudConfig.email||'';const avatar=document.getElementById('accountAvatar');if(avatar)avatar.textContent=signed?(email[0]||'U').toUpperCase():'?';const text=document.getElementById('accountButtonText');if(text)text.textContent=signed?email:tr('Minha conta','My account');if(accountProfileEmail)accountProfileEmail.textContent=email;if(accountProfileSync)accountProfileSync.textContent=cloudConfig.lastSync?new Date(cloudConfig.lastSync).toLocaleString():'—';if(accountAutoSync)accountAutoSync.checked=accountPrefs.autoSync!==false;if(accountEmail&&!accountEmail.value)accountEmail.value=cloudConfig.email||'';if(accountSupabaseUrl)accountSupabaseUrl.value=cloudConfig.url||'';if(accountSupabaseKey)accountSupabaseKey.value=cloudConfig.key||'';const ind=document.getElementById('accountSyncIndicator');if(ind)ind.textContent=signed?(cloudDirty?'Alterações aguardando sincronização':(cloudConfig.lastSync?'Sincronizado':'Conectado')):'Salvo neste dispositivo';}
 function accountLogout(){cloudLogout();closeAccountModal();refreshAccountUI();}
 function initAccountUI(){
@@ -1269,7 +1314,8 @@ const COMPLETION_LABELS={bees:'Bees',seeds:'Seeds',bosses:'Bosses',dimensions:'D
 function completionAll(){const o={};for(const[k,v]of Object.entries(COMPLETION_SEED))o[k]=[...v];for(const[k,v]of Object.entries(window.ATM10_COMPANION_DATA?.completion||{}))o[k]=[...(o[k]||[]),...v];for(const[k,v]of Object.entries(completionExtra))o[k]=[...(o[k]||[]),...(v||[])];for(const k in o)o[k]=[...new Set(o[k])].sort();return o}
 function ck(c,i){return c+':'+i}function saveCompletion(){localStorage.setItem(COMPLETION_KEY,JSON.stringify(completionState));localStorage.setItem(COMPLETION_EXTRA_KEY,JSON.stringify(completionExtra))}
 function completionStats(){let t=0,d=0;for(const[c,a]of Object.entries(completionAll())){t+=a.length;d+=a.filter(x=>completionState[ck(c,x)]).length}return{total:t,done:d,pct:t?Math.round(d/t*100):0}}
-function renderCompletionList(){const box=document.getElementById('completionResults');if(!box)return;const q=(completionSearch.value||'').toLowerCase(),cf=completionCategory.value,sf=completionStatus.value;let out='';for(const[c,a]of Object.entries(completionAll())){if(cf&&cf!==c)continue;const f=a.filter(x=>{const v=!!completionState[ck(c,x)];return(!q||x.toLowerCase().includes(q))&&(!sf||(sf==='done'?v:!v))});if(!f.length)continue;const d=a.filter(x=>completionState[ck(c,x)]).length;out+=`<details class="completion-group" open><summary>${COMPLETION_LABELS[c]||c} — ${d}/${a.length}<div class="completion-progress"><span style="width:${a.length?d/a.length*100:0}%"></span></div></summary><div class="completion-items">${f.map(x=>`<label class="completion-row"><input type="checkbox" data-cat="${c}" data-item="${escapeHtml(x)}" ${completionState[ck(c,x)]?'checked':''}><span><b>${x}</b></span></label>`).join('')}</div></details>`}box.innerHTML=out||'<p class="muted">No results.</p>';box.querySelectorAll('input[type=checkbox]').forEach(x=>x.onchange=()=>{completionState[ck(x.dataset.cat,x.dataset.item)]=x.checked;saveCompletion();renderCompletionDashboard()})}
+function renderCompletionList(){const box=document.getElementById('completionResults');if(!box)return;const q=(completionSearch.value||'').toLowerCase(),cf=completionCategory.value,sf=completionStatus.value;let out='';for(const[c,a]of Object.entries(completionAll())){if(cf&&cf!==c)continue;const f=a.filter(x=>{const v=!!completionState[ck(c,x)];return(!q||x.toLowerCase().includes(q))&&(!sf||(sf==='done'?v:!v))});if(!f.length)continue;const d=a.filter(x=>completionState[ck(c,x)]).length;out+=`<details class="completion-group" open><summary>${COMPLETION_LABELS[c]||c} — ${d}/${a.length}<div class="completion-progress"><span style="width:${a.length?d/a.length*100:0}%"></span></div></summary><div class="completion-items">${f.map(x=>{const has=!!getNote('completion',ck(c,x));return `<div class="completion-row"><input type="checkbox" data-cat="${c}" data-item="${escapeHtml(x)}" ${completionState[ck(c,x)]?'checked':''}><span><b>${escapeHtml(x)}</b></span><button type="button" class="action completion-note ${has?'has-note':''}" data-note-cat="${c}" data-note-item="${escapeHtml(x)}" title="${has?escapeHtml(getNote('completion',ck(c,x))):tr('Adicionar nota','Add note')}">${has?'📝':'＋'} ${tr('Nota','Note')}</button></div>`}).join('')}</div></details>`}box.innerHTML=out||'<p class="muted">No results.</p>';box.querySelectorAll('input[type=checkbox]').forEach(x=>x.onchange=()=>{completionState[ck(x.dataset.cat,x.dataset.item)]=x.checked;saveCompletion();renderCompletionDashboard()});box.querySelectorAll('[data-note-cat]').forEach(b=>b.onclick=()=>editCompletionNote(b.dataset.noteCat,b.dataset.noteItem))}
+function editCompletionNote(category,item){const id=ck(category,item),before=getNote('completion',id);const value=prompt(`${tr('Nota para','Note for')} ${item}`,before);if(value===null)return;if(value.trim())saveNote('completion',id,value.trim());else deleteNote('completion',id);renderCompletionList();queueAutoCloudSync?.()}
 function renderCompletionDashboard(){const z=completionStats();if(document.getElementById('completionPct'))completionPct.textContent=z.pct+'%';if(document.getElementById('completionCounts'))completionCounts.textContent=z.done+'/'+z.total;renderCompletionList()}
 function exportCompletion(){const b=new Blob([JSON.stringify({version:1,state:completionState,extra:completionExtra},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='atm10-completion.json';a.click()}
 function importCompletionJSON(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.state)completionState={...completionState,...d.state};const e=d.extra||d;for(const[k,v]of Object.entries(e))if(Array.isArray(v))completionExtra[k]=[...new Set([...(completionExtra[k]||[]),...v])];saveCompletion();renderCompletionDashboard()}catch(e){alert(e.message)}};r.readAsText(file)}
@@ -1540,7 +1586,7 @@ ${renderChapterToolbar(c,true)}
  }
 
  else if(tab==='multiblocks'){
-   box.innerHTML=`<section class="card"><h2>${tr('Visualizador 3D de multiblocos','3D multiblock viewer')}</h2><p class="muted">${tr('Veja todos os multiblocos cadastrados por camada, com rotação, zoom, transparência e vista explodida.','Inspect every catalogued multiblock layer by layer with rotation, zoom, transparency, and exploded view.')}</p><div id="multiblockViewer"></div><h3>${tr('Regras de construção','Building rules')}</h3><div class="tool-grid multiblock-list">${MULTIBLOCKS.map(m=>`<div class="tool-card"><h3>${L(m)}</h3><span class="pill">${m.status}</span><p><b>${L(m.size)}</b></p><ul>${L(m.rules).map(r=>`<li>${r}</li>`).join('')}</ul><button class="action" data-mb="${m.id}">${tr('Ver em 3D','View in 3D')}</button><div class="source-note">${m.source}</div></div>`).join('')}</div></section>`;
+   box.innerHTML=`<section class="card"><h2>${tr('Visualizador 3D de multiblocos','3D multiblock viewer')}</h2><p class="muted">${tr('Veja todos os multiblocos cadastrados por camada, com rotação, zoom, transparência e vista explodida.','Inspect every catalogued multiblock layer by layer with rotation, zoom, transparency, and exploded view.')}</p><div id="multiblockViewer"></div><h3>${tr('Regras de construção','Building rules')}</h3><div class="tool-grid multiblock-list">${MULTIBLOCKS.map(m=>`<div class="tool-card" data-search-id="${m.id}"><h3>${L(m)}</h3><span class="pill">${m.status}</span><p><b>${L(m.size)}</b></p><ul>${L(m.rules).map(r=>`<li>${r}</li>`).join('')}</ul><button class="action" data-mb="${m.id}">${tr('Ver em 3D','View in 3D')}</button><div class="source-note">${m.source}</div></div>`).join('')}</div></section>`;
    setTimeout(()=>{render3DViewer();document.querySelectorAll('[data-mb]').forEach(b=>b.addEventListener('click',()=>{activeMultiblockId=b.dataset.mb;viewerLayer=-1;render3DViewer();document.getElementById('multiblockViewer').scrollIntoView({behavior:'smooth'})}))},0);
  }
  else if(tab==='calculators'){
@@ -1571,7 +1617,7 @@ ${renderChapterToolbar(c,true)}
    box.innerHTML=`<section class="card"><h2>${tr('Prioridade de recursos','Resource priorities')}</h2><div class="tool-grid">${RESOURCE_DATA.map(r=>`<div class="tool-card priority-${r.priority}"><h3>${L(r)}</h3><div class="kv"><b>${tr('Prioridade','Priority')}</b><span>${r.priority}</span></div><div class="kv"><b>${tr('Estoque alvo','Stock target')}</b><span>${r.stock}</span></div><div class="kv"><b>${tr('Melhor método','Best method')}</b><span>${r.method}</span></div><button class="action" onclick="openChapter(${r.chapter})">${tr('Capítulo','Chapter')} ${r.chapter}</button></div>`).join('')}</div></section>`;
  }
  else if(tab==='bosses'){
-   box.innerHTML=`<section class="card"><h2>Boss tracker</h2><div class="tool-grid">${BOSS_DATA.map(b=>`<div class="tool-card boss-row"><input type="checkbox" ${trackers.bosses[b.id]?'checked':''} onchange="trackers.bosses['${b.id}']=this.checked;saveTrackers()"><div><h3>${L(b)}</h3><div class="kv"><b>Location</b><span>${b.location}</span></div><div class="kv"><b>Preparation</b><span>${b.prep}</span></div><div class="kv"><b>Mechanics</b><span>${b.mechanics}</span></div><div class="kv"><b>Drops</b><span>${b.drops}</span></div><div class="kv"><b>Repeatability</b><span>${b.repeat}</span></div><button class="action" onclick="openChapter(${b.chapter})">${tr('Abrir guia','Open guide')}</button></div></div>`).join('')}</div></section>`;
+   box.innerHTML=`<section class="card"><h2>Boss tracker</h2><div class="tool-grid">${BOSS_DATA.map(b=>`<div class="tool-card boss-row" data-search-id="${b.id}"><input type="checkbox" ${trackers.bosses[b.id]?'checked':''} onchange="trackers.bosses['${b.id}']=this.checked;saveTrackers()"><div><h3>${L(b)}</h3><div class="kv"><b>Location</b><span>${b.location}</span></div><div class="kv"><b>Preparation</b><span>${b.prep}</span></div><div class="kv"><b>Mechanics</b><span>${b.mechanics}</span></div><div class="kv"><b>Drops</b><span>${b.drops}</span></div><div class="kv"><b>Repeatability</b><span>${b.repeat}</span></div><button class="action" onclick="openChapter(${b.chapter})">${tr('Abrir guia','Open guide')}</button></div></div>`).join('')}</div></section>`;
  }
  else if(tab==='dimensions'){
    box.innerHTML=`<section class="card"><h2>${tr('Painel de dimensões','Dimension dashboard')}</h2><p class="muted">${tr('Marque cada dimensão depois de visitá-la.','Check each dimension after you visit it.')}</p></section>${renderDimensionOverview(true)}`;
@@ -1634,6 +1680,8 @@ ${renderChapterToolbar(c,true)}
       <aside class="world-panel">
         <div id="realDrop" class="import-drop"><b>📂 ${tr('Importar atm10-world-map.json','Import atm10-world-map.json')}</b><div class="muted">${tr('Clique ou arraste o arquivo aqui','Click or drop the file here')}</div></div>
         <input id="realWorldFile" type="file" accept="application/json" hidden>
+        <div class="sync-actions"><button id="realWorldExport" class="action" type="button" ${importedWorld?'':'disabled'}>${tr('Exportar mapa','Export map')}</button><button id="realWorldClear" class="action" type="button" ${importedWorld?'':'disabled'}>${tr('Limpar mapa','Clear map')}</button></div>
+        <p id="realWorldStatus" class="muted">${importedWorld?tr('Mapa restaurado deste dispositivo.','Map restored from this device.'):tr('Nenhum mundo importado ainda.','No imported world yet.')}</p>
         <div class="map-metrics">
           <div class="map-metric"><span>${tr('Mundo','World')}</span><b id="realWorldName">—</b></div>
           <div class="map-metric"><span>Seed</span><b id="realSeed">—</b></div>
@@ -1737,22 +1785,17 @@ ${renderChapterToolbar(c,true)}
  }
 
  else if(tab==='favorites'){
-   const favCh=chapters.filter(c=>isFavorite('chapter',c.id));
+   const favorites=Object.keys(personalData.favorites||{}).filter(key=>personalData.favorites[key]).map(personalTargetMeta).filter(Boolean);
    const notes=Object.entries(personalData.notes||{}).filter(([key,val])=>val && val.trim());
    box.innerHTML=`<section class="card">
      <h2>${tr('Favoritos e notas','Favorites and notes')}</h2>
-     <h3>${tr('Capítulos favoritos','Favorite chapters')}</h3>
+     <h3>${tr('Todos os favoritos','All favorites')}</h3>
      <div class="favorites-list">
-       ${favCh.length?favCh.map(c=>`<div class="favorite-card"><h3>${c.id}. ${chapterTitle(c)}</h3><button class="action" onclick="openChapter(${c.id})">${tr('Abrir','Open')}</button></div>`).join(''):`<p class="muted">${tr('Nenhum favorito ainda.','No favorites yet.')}</p>`}
+       ${favorites.length?favorites.map(x=>`<div class="favorite-card"><span class="pill">${escapeHtml(x.kind)}</span><h3>${escapeHtml(x.label)}</h3><button class="action" onclick="openPersonalTarget(decodeURIComponent('${encodeURIComponent(x.key)}'))">${tr('Abrir','Open')}</button></div>`).join(''):`<p class="muted">${tr('Nenhum favorito ainda.','No favorites yet.')}</p>`}
      </div>
      <h3>${tr('Minhas notas','My notes')}</h3>
      <div class="favorites-list">
-       ${notes.length?notes.map(([key,val])=>{
-         const m=key.match(/^chapter:(\d+)$/);
-         if(!m)return '';
-         const c=chapters.find(x=>x.id===Number(m[1]));
-         return `<div class="favorite-card"><h3>${c.id}. ${chapterTitle(c)}</h3><p>${escapeHtml(val).replace(/\n/g,'<br>')}</p><button class="action" onclick="openChapter(${c.id})">${tr('Abrir','Open')}</button></div>`;
-       }).join(''):`<p class="muted">${tr('Nenhum favorito ainda.','No favorites yet.')}</p>`}
+       ${notes.length?notes.map(([key,val])=>{const x=personalTargetMeta(key);return x?`<div class="favorite-card"><span class="pill">${escapeHtml(x.kind)}</span><h3>${escapeHtml(x.label)}</h3><p>${escapeHtml(val).replace(/\n/g,'<br>')}</p><button class="action" onclick="openPersonalTarget(decodeURIComponent('${encodeURIComponent(key)}'))">${tr('Abrir','Open')}</button></div>`:''}).join(''):`<p class="muted">${tr('Nenhuma nota ainda.','No notes yet.')}</p>`}
      </div>
    </section>`;
  }
@@ -1785,11 +1828,56 @@ function openChapter(n){
  window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;sync();render();setTimeout(()=>translateStatic(document),0);});
+function globalSearchEntries(){
+ const entries=[];
+ chapters.forEach(c=>entries.push({kind:'chapter',id:String(c.id),chapter:c.id,label:`${c.id}. ${chapterTitle(c)}`,text:searchableText([c.pt,c.en,tasks(c),chapterGuideStore().summaries[c.id]])}));
+ ITEM_PAGES.forEach(x=>entries.push({kind:'item',id:x.id,chapter:x.chapter,label:L(x),text:searchableText([x.mod,x.machine,x.recipe,x.uses,x.dimension,x.related])}));
+ encyclopediaAll().forEach(x=>entries.push({kind:'encyclopedia',id:x.id,chapter:x.chapter,label:x.name,text:searchableText([x.mod,x.category,x.description,x.recipe,x.uses,x.automation,x.location,x.issues])}));
+ BOSS_DATA.forEach(x=>entries.push({kind:'boss',id:x.id,chapter:x.chapter,label:L(x),text:searchableText([x.location,x.prep,x.mechanics,x.drops])}));
+ DIMENSION_DATA.forEach(x=>entries.push({kind:'dimension',id:x.id,chapter:x.chapter,label:L(x),text:searchableText(x)}));
+ MULTIBLOCKS.forEach(x=>entries.push({kind:'multiblock',id:x.id,chapter:x.chapter,label:L(x),text:searchableText([x.size,x.rules,x.source])}));
+ TROUBLE_DATA.forEach((x,i)=>entries.push({kind:'troubleshoot',id:String(i),label:x.title,text:searchableText([x.keys,x.steps])}));
+ [
+  ['calculators','calculators',tr('Calculadoras interativas','Interactive calculators'),'antimatter polonium energy powah mana blood magic LP ATM Star induction matrix reactor stock'],
+  ['equipment','equipment',tr('Planejador de equipamento','Equipment planner'),'armor armour allthemodium vibranium unobtainium mekasuit apotheosis affix gems enchantments build'],
+  ['base','base',tr('Planejador de base','Base planner'),'chunks modules districts tunnels AE2 nuclear farm magic create'],
+  ['flows','flows',tr('Fluxogramas da progressão','Progression flowcharts'),'mekanism nuclear ATM Star dimension progression'],
+  ['techtree','techtree',tr('Árvore tecnológica','Technology tree'),'storage power mining magic automation endgame dependencies'],
+  ['compare','compare',tr('Comparadores','Comparisons'),'digital miner builder chunk destroyer powah mekanism bees mystical agriculture armor power']
+ ].forEach(x=>entries.push({kind:'tab',id:x[1],label:x[2],text:x[3]}));
+ return entries;
+}
+function openSearchTarget(kind,id,chapter){
+ const host=document.getElementById('globalSearchResults');if(host)host.hidden=true;
+ if(kind==='chapter')return openChapter(Number(chapter||id));
+ if(kind==='item')return openItem(id);
+ if(kind==='encyclopedia')return openEncyclopedia(id);
+ if(kind==='multiblock')activeMultiblockId=id;
+ const targetTab=kind==='boss'?'bosses':kind==='dimension'?'dimensions':kind==='multiblock'?'multiblocks':kind==='troubleshoot'?'troubleshoot':id;
+ tab=targetTab;sync();render();document.getElementById('side').classList.remove('open');
+ setTimeout(()=>{
+  if(kind==='troubleshoot'){
+   const x=TROUBLE_DATA[Number(id)],input=document.getElementById('troubleQuery');if(input&&x){input.value=x.title;runTrouble();}
+  }
+  const el=document.querySelector(`[data-search-id="${CSS.escape(String(id))}"]`);if(el){el.classList.add('search-focused');el.scrollIntoView({behavior:'smooth',block:'center'});}
+  translateStatic(document);
+ },0);
+}
+function renderGlobalSearchResults(raw){
+ const host=document.getElementById('globalSearchResults');if(!host)return;
+ const terms=normalizeSearch(raw).split(/\s+/).filter(Boolean);
+ if(!terms.length){host.hidden=true;host.innerHTML='';return;}
+ const kindNames={chapter:tr('Capítulo','Chapter'),item:tr('Item','Item'),encyclopedia:tr('Enciclopédia','Encyclopedia'),boss:'Boss',dimension:tr('Dimensão','Dimension'),multiblock:tr('Multibloco','Multiblock'),troubleshoot:tr('Diagnóstico','Troubleshooting'),tab:tr('Ferramenta','Tool')};
+ const matches=globalSearchEntries().map(x=>{const title=normalizeSearch(x.label),all=normalizeSearch([x.label,x.text]);const ok=terms.every(t=>all.includes(t));const score=terms.reduce((n,t)=>n+(title.startsWith(t)?100:title.includes(t)?40:all.includes(t)?5:0),0);return {...x,ok,score};}).filter(x=>x.ok).sort((a,b)=>b.score-a.score||a.label.localeCompare(b.label)).slice(0,12);
+ host.hidden=false;
+ host.innerHTML=matches.length?matches.map(x=>`<div class="search-result"><button type="button" data-kind="${x.kind}" data-id="${escapeHtml(x.id)}" data-chapter="${x.chapter||''}"><span class="search-kind">${kindNames[x.kind]}</span><br><b>${escapeHtml(x.label)}</b>${x.chapter&&x.kind!=='chapter'?`<br><small>${tr('Capítulo','Chapter')} ${x.chapter}</small>`:''}</button></div>`).join(''):`<div class="nav-empty">${tr('Nenhum resultado direto encontrado.','No direct result found.')}</div>`;
+ host.querySelectorAll('[data-kind]').forEach(b=>b.addEventListener('click',()=>openSearchTarget(b.dataset.kind,b.dataset.id,b.dataset.chapter)));
+}
 const guideSearch=document.getElementById('search');
 guideSearch.oninput=e=>{
  const raw=e.target.value.trim();
- if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)){e.target.value='';query='';nav();return;}
- query=normalizeSearch(raw);nav();
+ if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)){e.target.value='';query='';renderGlobalSearchResults('');nav();return;}
+ query=normalizeSearch(raw);renderGlobalSearchResults(raw);nav();
 };
 document.getElementById('menu').onclick=()=>document.getElementById('side').classList.toggle('open');
 document.getElementById('sidebarClose').onclick=()=>document.getElementById('side').classList.remove('open');
@@ -1953,7 +2041,7 @@ const PERSONAL_KEY='atm10-v13-personal';
 let personalData=JSON.parse(localStorage.getItem(PERSONAL_KEY)||'{"favorites":{},"notes":{}}');
 
 function personalKey(type,id){return `${type}:${id}`;}
-function savePersonal(){localStorage.setItem(PERSONAL_KEY,JSON.stringify(personalData));}
+function savePersonal(){localStorage.setItem(PERSONAL_KEY,JSON.stringify(personalData));if(typeof queueAutoCloudSync==='function')queueAutoCloudSync();}
 function isFavorite(type,id){return !!(personalData.favorites||{})[personalKey(type,id)];}
 function toggleFavorite(type,id){
   personalData.favorites=personalData.favorites||{};
@@ -1972,6 +2060,24 @@ function deleteNote(type,id){
   personalData.notes=personalData.notes||{};
   delete personalData.notes[personalKey(type,id)];
   savePersonal();
+}
+function personalTargetMeta(key){
+ const split=String(key).indexOf(':');if(split<1)return null;
+ const type=key.slice(0,split),id=key.slice(split+1);
+ if(type==='chapter'){const c=chapters.find(x=>x.id===Number(id));return c?{key,type,id,kind:tr('Capítulo','Chapter'),label:`${c.id}. ${chapterTitle(c)}`}:null;}
+ if(type==='item'){const x=ITEM_PAGES.find(v=>v.id===id);return x?{key,type,id,kind:tr('Item','Item'),label:L(x)}:null;}
+ if(type==='encyclopedia'){const x=encyclopediaAll().find(v=>v.id===id);return x?{key,type,id,kind:tr('Enciclopédia','Encyclopedia'),label:x.name}:null;}
+ if(type==='completion'){const parts=id.split(':'),item=parts.slice(1).join(':');return {key,type,id,kind:tr('Objetivo','Objective'),label:item||id};}
+ return {key,type,id,kind:type,label:id};
+}
+function openPersonalTarget(key){
+ const x=personalTargetMeta(key);if(!x)return;
+ if(x.type==='chapter')return openChapter(Number(x.id));
+ if(x.type==='item')return openItem(x.id);
+ if(x.type==='encyclopedia')return openEncyclopedia(x.id);
+ if(x.type==='completion'){
+  const item=x.id.split(':').slice(1).join(':');tab='completion';sync();render();setTimeout(()=>{const input=document.getElementById('completionSearch');if(input){input.value=item;renderCompletionList();input.scrollIntoView({behavior:'smooth',block:'center'});}},0);
+ }
 }
 function escapeHtml(value){
   return String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));

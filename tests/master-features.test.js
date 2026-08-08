@@ -36,3 +36,35 @@ test('all requested configurable calculators exist', () => {
 test('the companion does not add an AI assistant', () => {
   assert.doesNotMatch(html, /data-tab="ai"|AI assistant|assistente de IA/i);
 });
+
+test('global search opens every major guide entity directly', () => {
+  assert.match(html, /id="globalSearchResults"/);
+  assert.match(html, /function globalSearchEntries\(/);
+  assert.match(html, /function openSearchTarget\(/);
+  for (const kind of ['chapter','item','encyclopedia','boss','dimension','multiblock','troubleshoot']) {
+    assert.ok(html.includes(`kind:'${kind}'`), `missing global search kind ${kind}`);
+  }
+});
+
+test('personal data supports item, encyclopedia and checklist notes', () => {
+  assert.match(html, /function personalTargetMeta\(/);
+  assert.match(html, /getNote\('completion'/);
+  assert.match(html, /function editCompletionNote\(/);
+  assert.match(html, /isFavorite\('item'/);
+  assert.match(html, /isFavorite\('encyclopedia'/);
+});
+
+test('real world map is validated, persisted and exportable', () => {
+  assert.match(html, /const REAL_WORLD_KEY=/);
+  assert.match(html, /function validateWorldMap\(/);
+  assert.match(html, /function persistImportedWorld\(/);
+  assert.match(html, /id="realWorldExport"/);
+  assert.match(html, /id="realWorldClear"/);
+});
+
+test('offline cloud updates remain queued and retry after refresh', () => {
+  assert.match(html, /const CLOUD_PENDING_KEY=/);
+  assert.match(html, /function setCloudPending\(/);
+  assert.match(html, /function cloudSessionFetch\(/);
+  assert.match(html, /res\.status===401/);
+});

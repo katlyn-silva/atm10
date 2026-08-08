@@ -1,7 +1,7 @@
 {
-  "version": "26.0",
+  "version": "27.0",
   "released_at": "2026-08-03",
-  "title": "Complete Companion Tools Edition",
+  "title": "Connected Companion Edition",
   "notes": [
     "Consolidated final build based on the latest complete version",
     "All 60 chapters verified",
@@ -10,7 +10,12 @@
     "Final QA: fixed Cloud/Updates tab event handlers and restored Supabase connection test button",
     "Added full boss and dimension trackers, 10 schematic dimension maps, extended 100% checklists and scalable encyclopedia validation",
     "Added progression flowcharts, technology tree, comparisons, four new configurable calculators and complete backup/restore",
-    "Expanded the real-installation completion importer and kept the explicit no-AI-assistant requirement"
+    "Expanded the real-installation completion importer and kept the explicit no-AI-assistant requirement",
+    "Added global search with direct opening for chapters, items, bosses, dimensions, multiblocks, diagnostics and tools",
+    "Completed favorites and notes across chapters, items, encyclopedia pages and checklist objectives",
+    "Persisted validated real-world imports with export/clear controls and safe handling for oversized maps",
+    "Queued offline cloud changes, added safe session-refresh retry and hardened the Supabase RLS/grant setup",
+    "Added multiblock status guidance and material-list export"
   ],
   "download_url": ""
 }
