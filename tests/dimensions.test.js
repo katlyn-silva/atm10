@@ -4,14 +4,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const app = fs.readFileSync(path.join(__dirname, '..', 'app.js'), 'utf8');
 
 function jsonConstant(name, endMarker) {
   const marker = `const ${name}=`;
-  const start = html.indexOf(marker);
+  const start = app.indexOf(marker);
   assert.notEqual(start, -1, `${name} must exist`);
-  const end = html.indexOf(endMarker, start + marker.length);
+  const end = app.indexOf(endMarker, start + marker.length);
   assert.notEqual(end, -1, `${name} must have a closing marker`);
-  return JSON.parse(html.slice(start + marker.length, end));
+  return JSON.parse(app.slice(start + marker.length, end));
 }
 
 const dimensions = jsonConstant('DIMENSION_DATA', ';\nconst HIDDEN_LOCATION_DATA=');
@@ -44,7 +45,7 @@ test('hidden location guide includes all supplied exploration targets', () => {
 });
 
 test('dimension overview is shown in chapter guides and the dashboard', () => {
-  assert.match(html, /renderDimensionOverview\(false,c\.id\)/);
-  assert.match(html, /renderDimensionOverview\(true\)/);
-  assert.match(html, /chapterId!==39&&chapterId!==54/);
+  assert.match(app, /renderDimensionOverview\(false,c\.id\)/);
+  assert.match(app, /renderDimensionOverview\(true\)/);
+  assert.match(app, /chapterId!==39&&chapterId!==54/);
 });

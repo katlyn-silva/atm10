@@ -1,7 +1,7 @@
 {
-  "version": "27.0",
+  "version": "28.0",
   "released_at": "2026-08-03",
-  "title": "Connected Companion Edition",
+  "title": "Modular Application and CI Edition",
   "notes": [
     "Consolidated final build based on the latest complete version",
     "All 60 chapters verified",
@@ -15,7 +15,10 @@
     "Completed favorites and notes across chapters, items, encyclopedia pages and checklist objectives",
     "Persisted validated real-world imports with export/clear controls and safe handling for oversized maps",
     "Queued offline cloud changes, added safe session-refresh retry and hardened the Supabase RLS/grant setup",
-    "Added multiblock status guidance and material-list export"
+    "Added multiblock status guidance and material-list export",
+    "Split the monolithic HTML into index.html, styles.css, app.js, and six standalone gallery assets",
+    "Added automatic GitHub Actions checks for all JavaScript and Python tests on pushes and pull requests",
+    "Updated the offline app shell so the extracted code and gallery assets remain available without internet"
   ],
   "download_url": ""
 }
