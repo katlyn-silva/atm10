@@ -58,6 +58,7 @@ test('activation deletes only obsolete ATM10 caches', async () => {
     'atm10-guide-v29',
     'atm10-guide-v30',
     'atm10-guide-v31',
+    'atm10-guide-v32',
     'another-app-v4',
   ]);
   let activation;
@@ -65,5 +66,5 @@ test('activation deletes only obsolete ATM10 caches', async () => {
   handlers.activate({ waitUntil: promise => { activation = promise; } });
   await activation;
 
-  assert.deepEqual(deletedCaches, ['atm10-guide-final-v25', 'atm10-guide-v26', 'atm10-guide-v27', 'atm10-guide-v28', 'atm10-guide-v29', 'atm10-guide-v30', 'atm10-guide-v31']);
+  assert.deepEqual(deletedCaches, ['atm10-guide-final-v25', 'atm10-guide-v26', 'atm10-guide-v27', 'atm10-guide-v28', 'atm10-guide-v29', 'atm10-guide-v30', 'atm10-guide-v31', 'atm10-guide-v32']);
 });

@@ -10,7 +10,7 @@ window.ATM10_CHAPTER_GUIDES={
       "pt": "Primeiras máquinas, energia inicial, produção de aço, duplicação de minérios, mochila e sala de máquinas."
     },
     "3": {
-      "pt": "Rotas para os minérios essenciais e preparação para automação."
+      "pt": "Allthemodium no Deep Dark, Teleport Pad, Mining Dimension, grandes estoques de minérios e preparação para o Digital Miner."
     },
     "4": {
       "pt": "Primeiras máquinas, energia e processamento básico."
@@ -193,6 +193,7 @@ window.ATM10_CHAPTER_GUIDES={
       37
     ],
     "3": [
+      3,
       29,
       36
     ],
@@ -631,6 +632,280 @@ That changes the pace of the entire playthrough.
 ⭐ Pro Tip
 
 One of the biggest differences between average and experienced ATM10 players is automation timing. As soon as you have stable power and ore doubling, stop thinking about individual resources and start thinking about systems: automatic storage, automatic ore processing, and automatic resource generation. That's what makes progression snowball.`
+    },
+    "3": {
+      "title": "ATM10 Ultimate Progression Guide v7.2 — Chapter 3: Allthemodium & Unlocking the Mining Dimension",
+      "body": `Difficulty: ⭐⭐⭐☆☆
+Estimated Time: 1–2 Hours
+Goal: Unlock the Mining Dimension and never worry about basic resources again.
+
+🎯 Why This Chapter Matters
+
+This is the biggest turning point in ATM10.
+
+Before this chapter:
+
+You manually mine resources.
+Diamonds feel valuable.
+You constantly run out of iron and redstone.
+
+After this chapter:
+
+Thousands of ores become available.
+Digital Miner becomes realistic.
+Progress speeds up dramatically.
+
+✅ Prerequisites
+
+Complete Chapter 2 first.
+
+You should have:
+
+☑ Full Iron or Diamond Armor
+
+☑ Iron Backpack
+
+☑ Stable Power
+
+☑ Ore Doubling
+
+☑ Steel Production
+
+☑ Basic Mekanism Setup
+
+Step 1 — Find the Deep Dark
+
+Allthemodium naturally generates in the Deep Dark.
+
+Ways to find it
+
+☐ Explore large caves below Y 0.
+
+☐ Look for Sculk blocks.
+
+☐ Listen for the Deep Dark ambience.
+
+☐ Avoid activating Shriekers.
+
+What you're looking for
+
+Deep Dark contains:
+
+✅ Sculk
+
+✅ Sculk Catalysts
+
+✅ Shriekers
+
+✅ Ancient Cities
+
+✅ Allthemodium Ore
+
+⭐ Pro Tip
+
+Ignore the Ancient City at first.
+
+You're here for one thing:
+
+Your first Allthemodium Ore.
+
+Step 2 — Mine Your First Allthemodium
+
+You only need a few pieces.
+
+Goal:
+
+☐ Obtain your first Allthemodium.
+
+☐ Return safely.
+
+Don't stay longer than necessary.
+
+⚠️ Avoid the Warden
+
+Never fight it this early.
+
+If a Shrieker activates:
+
+☐ Stop moving.
+
+☐ Crouch.
+
+☐ Leave the area.
+
+The Warden is not worth fighting for early progression.
+
+Step 3 — Craft Allthemodium Tools
+
+Priority:
+
+🥇 Pickaxe
+
+Then:
+
+☑ Paxel
+
+Later:
+
+☑ Armor
+
+Don't waste your first ingots on decorative items.
+
+Step 4 — Unlock the Mining Dimension
+
+One of the biggest milestones in ATM10.
+
+Craft:
+
+☐ Teleport Pad
+
+Place it:
+
+☑ In the Overworld.
+
+Use it to enter:
+
+🌍 Mining Dimension
+
+Why the Mining Dimension Is Amazing
+
+Everything here is designed for mining.
+
+Advantages:
+
+✅ Massive cave systems
+
+✅ Easy strip mining
+
+✅ No terrain destruction in your main world
+
+✅ Easier access to large ore deposits
+
+✅ Safe place for large-scale resource gathering
+
+Step 5 — Explore the Mining Dimension
+
+Objectives:
+
+☐ Activate a Waystone if you find one.
+
+☐ Mark good cave entrances.
+
+☐ Collect thousands of ores.
+
+☐ Gather more Allthemodium.
+
+☐ Stockpile Diamonds.
+
+Step 6 — Build Better Equipment
+
+Now upgrade to:
+
+☑ Allthemodium Pickaxe
+
+☑ Better Backpack
+
+☑ Better Charm setup
+
+☑ Better Weapons
+
+Mining becomes much faster.
+
+Step 7 — Prepare for Automation
+
+Start collecting resources for:
+
+☑ Digital Miner
+
+☑ Bigger Power System
+
+☑ AE2
+
+☑ More Storage
+
+Don't craft the Digital Miner yet unless you already have strong power generation.
+
+What to Collect
+
+Before leaving the Mining Dimension:
+
+☐ 20+ Stacks Iron
+
+☐ 20+ Stacks Osmium
+
+☐ 10 Stacks Gold
+
+☐ 10 Stacks Redstone
+
+☐ Uranium
+
+☐ Fluorite
+
+☐ Diamonds
+
+☐ More Allthemodium
+
+Future you will thank you.
+
+Common Mistakes
+
+❌ Fighting the Warden.
+
+❌ Leaving after finding only one ore.
+
+❌ Ignoring Osmium.
+
+❌ Forgetting to mark important caves.
+
+❌ Using Allthemodium on unnecessary tools first.
+
+⭐ Speedrun Route
+
+Overworld
+⬇
+
+Iron Armor
+⬇
+
+Mekanism
+⬇
+
+Ore Doubling
+⬇
+
+Deep Dark
+⬇
+
+Allthemodium
+⬇
+
+Teleport Pad
+⬇
+
+Mining Dimension
+⬇
+
+Thousands of Resources
+
+Chapter 3 Checklist
+
+☐ Found the Deep Dark.
+
+☐ Obtained Allthemodium.
+
+☐ Crafted an Allthemodium Pickaxe.
+
+☐ Built the Teleport Pad.
+
+☐ Entered the Mining Dimension.
+
+☐ Collected large quantities of ores.
+
+☐ Prepared for the Digital Miner.
+
+🏆 Chapter Reward
+
+By the end of this chapter, you should no longer struggle with basic materials. Your focus shifts from finding resources to processing and automating them.`
     },
     "4": {
       "title": "The Digital Miner (The Game Changer)",

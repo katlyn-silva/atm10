@@ -1,7 +1,7 @@
 {
-  "version": "28.1",
+  "version": "28.2",
   "released_at": "2026-08-08",
-  "title": "Your First Machines Chapter Edition",
+  "title": "Early Progression Chapters Edition",
   "notes": [
     "Consolidated final build based on the latest complete version",
     "All 60 chapters verified",
@@ -20,7 +20,9 @@
     "Added automatic GitHub Actions checks for all JavaScript and Python tests on pushes and pull requests",
     "Updated the offline app shell so the extracted code and gallery assets remain available without internet",
     "Added the complete ATM10 Ultimate Guide v7.2 Chapter 2: Your First Machines walkthrough",
-    "Expanded Chapter 2 with early power, Mekanism, steel, ore doubling, backpack, mining and machine-room guidance"
+    "Expanded Chapter 2 with early power, Mekanism, steel, ore doubling, backpack, mining and machine-room guidance",
+    "Added the complete ATM10 Ultimate Progression Guide v7.2 Chapter 3: Allthemodium and Unlocking the Mining Dimension",
+    "Expanded Chapter 3 with Deep Dark safety, the Teleport Pad, Mining Dimension goals, resource targets and Digital Miner preparation"
   ],
   "download_url": ""
 }
